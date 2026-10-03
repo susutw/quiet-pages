@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import { published, slug } from '../lib';
+
+const posts = await published('photos');
+---
+
+{
+  posts.length === 0 ? (
+    <p class="empty">還沒有照片。</p>
+  ) : (
+    <ul class="grid">
+      {posts.map((post) => (
+        <li>
+          <a href={`/photos/${slug(post.id)}/`} aria-label={post.data.title ?? '查看'}>
+            <Image
+              src={post.data.images[0]}
+              alt={post.data.title ?? ''}
+              width={600}
+              height={600}
+              fit="cover"
+              loading="lazy"
+            />
+            {post.data.images.length > 1 && (
+              <span class="count">{post.data.images.length}</span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  a {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--line);
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s;
+  }
+  a:hover img {
+    opacity: 0.85;
+  }
+  .count {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.5rem;
+    font-size: 0.7rem;
+    color: #fff;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

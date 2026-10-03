@@ -1,0 +1,51 @@
+---
+import { render } from 'astro:content';
+import { published, formatDateTime } from '../lib';
+
+const notes = await published('notes');
+const rendered = await Promise.all(
+  notes.map(async (note) => ({ note, Content: (await render(note)).Content })),
+);
+---
+
+{
+  rendered.length === 0 ? (
+    <p class="empty">還沒有短文。</p>
+  ) : (
+    <ol class="feed">
+      {rendered.map(({ note, Content }) => (
+        <li id={note.id}>
+          <div class="prose">
+            <Content />
+          </div>
+          <a class="meta" href={`/notes/${note.id}/`}>
+            <time datetime={note.data.date.toISOString()}>{formatDateTime(note.data.date)}</time>
+          </a>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+<style>
+  .feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    padding: 2rem 0;
+    border-top: 1px solid var(--line);
+  }
+  li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .meta {
+    display: inline-block;
+    margin-top: 0.9rem;
+  }
+  .meta:hover {
+    color: var(--fg);
+  }
+</style>

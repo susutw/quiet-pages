@@ -1,0 +1,38 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { published, formatDateTime } from '../../lib';
+
+export async function getStaticPaths() {
+  const notes = await published('notes');
+  return notes.map((note) => ({ params: { id: note.id }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const stamp = formatDateTime(note.data.date);
+---
+
+<Base title={stamp} tab="notes">
+  <article>
+    <div class="prose">
+      <Content />
+    </div>
+    <time class="meta" datetime={note.data.date.toISOString()}>{stamp}</time>
+  </article>
+  <a class="back meta" href="/notes/">返回</a>
+</Base>
+
+<style>
+  time {
+    display: block;
+    margin-top: 0.9rem;
+  }
+  .back {
+    display: inline-block;
+    margin-top: 4rem;
+  }
+  .back:hover {
+    color: var(--fg);
+  }
+</style>
