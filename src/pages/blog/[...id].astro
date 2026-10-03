@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { published, formatDate } from '../../lib';
+import { published, formatDate, url } from '../../lib';
 
 export async function getStaticPaths() {
   const posts = await published('blog');
@@ -22,7 +22,7 @@ const { Content } = await render(post);
       <Content />
     </div>
   </article>
-  <a class="back meta" href="/blog/">返回</a>
+  <a class="back meta" href={url('/blog/')}>返回</a>
 </Base>
 
 <style>

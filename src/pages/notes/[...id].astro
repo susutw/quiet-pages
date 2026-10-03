@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { published, formatDateTime } from '../../lib';
+import { published, formatDateTime, url } from '../../lib';
 
 export async function getStaticPaths() {
   const notes = await published('notes');
@@ -20,7 +20,7 @@ const stamp = formatDateTime(note.data.date);
     </div>
     <time class="meta" datetime={note.data.date.toISOString()}>{stamp}</time>
   </article>
-  <a class="back meta" href="/notes/">返回</a>
+  <a class="back meta" href={url('/notes/')}>返回</a>
 </Base>
 
 <style>

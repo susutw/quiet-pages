@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { site } from '../../site.config';
+import { url } from '../lib';
 
 interface Props {
   title?: string;
@@ -12,7 +13,7 @@ interface Props {
 const { title, description = site.description.replace(/\s*\n\s*/g, ' '), tab, wide = false } = Astro.props;
 const pageTitle = title ? `${title} — ${site.title}` : site.title;
 const path = Astro.url.pathname;
-const current = tab ?? site.tabs.find((t) => path.startsWith(t.href))?.key;
+const current = tab ?? site.tabs.find((t) => path.startsWith(url(t.href)))?.key;
 
 const { body, notes } = site.fonts;
 const families = [body, notes]
@@ -30,7 +31,7 @@ const fontVars = `--body-font: '${body.name}'; --notes-font: '${notes.name}';`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href={fontsHref} />
@@ -41,20 +42,20 @@ const fontVars = `--body-font: '${body.name}'; --notes-font: '${notes.name}';`;
         <div class="profile">
           {
             site.avatar && (
-              <a class="avatar" href="/" tabindex="-1">
-                <img src={site.avatar} alt="" width="88" height="88" />
+              <a class="avatar" href={url('/')} tabindex="-1">
+                <img src={url(site.avatar)} alt="" width="88" height="88" />
               </a>
             )
           }
           <div class="profile-text">
-            <a class="site-title" href="/">{site.title}</a>
+            <a class="site-title" href={url('/')}>{site.title}</a>
             {site.description && <p class="site-desc">{site.description}</p>}
           </div>
         </div>
         <nav class="tabs" aria-label="分頁">
           {
             site.tabs.map((t) => (
-              <a href={t.href} aria-current={current === t.key ? 'page' : undefined}>
+              <a href={url(t.href)} aria-current={current === t.key ? 'page' : undefined}>
                 {t.label}
               </a>
             ))

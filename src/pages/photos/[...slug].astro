@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import { published, slug, formatDate } from '../../lib';
+import { published, slug, formatDate, url } from '../../lib';
 
 export async function getStaticPaths() {
   const posts = await published('photos');
@@ -33,7 +33,7 @@ const { Content } = await render(post);
     </div>
     <time class="meta" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
   </article>
-  <a class="back meta" href="/photos/">返回</a>
+  <a class="back meta" href={url('/photos/')}>返回</a>
 </Base>
 
 <style>

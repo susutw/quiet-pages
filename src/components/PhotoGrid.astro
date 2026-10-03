@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { published, slug } from '../lib';
+import { published, slug, url } from '../lib';
 
 const posts = await published('photos');
 ---
@@ -12,7 +12,7 @@ const posts = await published('photos');
     <ul class="grid">
       {posts.map((post) => (
         <li>
-          <a href={`/photos/${slug(post.id)}/`} aria-label={post.data.title ?? '查看'}>
+          <a href={url(`/photos/${slug(post.id)}/`)} aria-label={post.data.title ?? '查看'}>
             <Image
               src={post.data.images[0]}
               alt={post.data.title ?? ''}

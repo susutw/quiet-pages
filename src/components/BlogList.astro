@@ -1,5 +1,5 @@
 ---
-import { published, formatDate } from '../lib';
+import { published, formatDate, url } from '../lib';
 
 const posts = await published('blog');
 ---
@@ -11,7 +11,7 @@ const posts = await published('blog');
     <ul class="blog-list">
       {posts.map((post) => (
         <li>
-          <a href={`/blog/${post.id}/`}>
+          <a href={url(`/blog/${post.id}/`)}>
             <span class="title">{post.data.title}</span>
             <time class="meta" datetime={post.data.date.toISOString()}>
               {formatDate(post.data.date)}

@@ -10,6 +10,13 @@ export async function published<K extends CollectionKey>(name: K) {
   );
 }
 
+/** 站內連結加上 base 路徑，例如部署在 /quiet-pages/ 底下時 */
+export function url(path: string) {
+  if (/^[a-z]+:\/\//i.test(path)) return path;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return `${base}/${path.replace(/^\//, '')}`;
+}
+
 /** 去掉 photos 資料夾 id 結尾的 /index */
 export function slug(id: string) {
   return id.replace(/\/index$/, '');

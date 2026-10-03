@@ -1,6 +1,6 @@
 ---
 import { render } from 'astro:content';
-import { published, formatDateTime } from '../lib';
+import { published, formatDateTime, url } from '../lib';
 
 const notes = await published('notes');
 const rendered = await Promise.all(
@@ -18,7 +18,7 @@ const rendered = await Promise.all(
           <div class="prose note-text">
             <Content />
           </div>
-          <a class="meta" href={`/notes/${note.id}/`}>
+          <a class="meta" href={url(`/notes/${note.id}/`)}>
             <time datetime={note.data.date.toISOString()}>{formatDateTime(note.data.date)}</time>
           </a>
         </li>
