@@ -28,16 +28,21 @@ npm run build    # 輸出到 dist/
 ```
 content/
   blog/
+    _example.md                   範例（不會顯示在網站上）
     on-walking.md                 一篇文章一個檔案
     hello/index.md                也可以用資料夾，圖片放旁邊
   photos/
+    _example/                     範例（不會顯示在網站上）
     2026-09-14-harbor/            一則圖文一個資料夾
       index.md
-      1.png
-      2.png
+      1.jpg
+      2.jpg
   notes/
+    _example.md                   範例（不會顯示在網站上）
     2026-10-03-2140.md            檔名隨意，建議用日期時間
 ```
+
+**檔名或資料夾名以 `_` 開頭的不會出現在網站上。** 每種內容都附了一個 `_example`，裡面有各欄位的說明，複製一份、去掉開頭的 `_` 就能開始寫。
 
 ### 文章 `content/blog/*.md`
 

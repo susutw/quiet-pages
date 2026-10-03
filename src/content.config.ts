@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 // 文章：content/blog/<slug>.md 或 content/blog/<slug>/index.md
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './content/blog' }),
+  loader: glob({ pattern: ['**/*.md', '!**/_*'], base: './content/blog' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -15,7 +15,7 @@ const blog = defineCollection({
 
 // 圖文：每篇一個資料夾 content/photos/<slug>/index.md，照片放在同一個資料夾
 const photos = defineCollection({
-  loader: glob({ pattern: '**/index.md', base: './content/photos' }),
+  loader: glob({ pattern: ['**/index.md', '!**/_*/**'], base: './content/photos' }),
   schema: ({ image }) =>
     z.object({
       date: z.coerce.date(),
@@ -27,11 +27,12 @@ const photos = defineCollection({
 
 // 短文：content/notes/<任意檔名>.md，只需要 date
 const notes = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './content/notes' }),
+  loader: glob({ pattern: ['**/*.md', '!**/_*'], base: './content/notes' }),
   schema: z.object({
     date: z.coerce.date(),
     draft: z.boolean().default(false),
   }),
 });
 
+// 檔名或資料夾名以 _ 開頭的會被略過，用來放範例或暫存。
 export const collections = { blog, photos, notes };
