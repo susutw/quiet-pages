@@ -86,6 +86,18 @@ date: 2026-10-03T21:40:00+08:00
 
 任何內容加上 `draft: true` 就不會發布。
 
+## 部署到 GitHub Pages
+
+已經附好 `.github/workflows/deploy.yml`，推上 `main` 就會自動 build 並部署。
+
+1. 用 **Use this template** 建立你自己的 repo。
+2. 到 repo 的 **Settings → Pages**，把 **Source** 選成 **GitHub Actions**。
+3. 推一次 `main`（或到 Actions 手動執行 Deploy to GitHub Pages）。
+
+網址與子路徑（例如 `https://你的帳號.github.io/repo名稱/`）會自動帶入，不需要另外設定。
+
+部署到 Netlify、Vercel 等其他地方：build 指令是 `npm run build`，輸出資料夾是 `dist`，並把 `astro.config.mjs` 的 `site` 改成你的網址。
+
 ## 風格
 
 - 襯線字體（Noto Serif TC），米白底色，自動支援深色模式。
