@@ -13,10 +13,18 @@ const { title, description = site.description, tab, wide = false } = Astro.props
 const pageTitle = title ? `${title} — ${site.title}` : site.title;
 const path = Astro.url.pathname;
 const current = tab ?? site.tabs.find((t) => path.startsWith(t.href))?.key;
+
+const { body, notes } = site.fonts;
+const families = [body, notes]
+  .filter((f, i, all) => all.findIndex((x) => x.name === f.name) === i)
+  .map((f) => `family=${f.name.replaceAll(' ', '+')}:wght@${f.weights}`)
+  .join('&');
+const fontsHref = `https://fonts.googleapis.com/css2?${families}&display=swap`;
+const fontVars = `--body-font: '${body.name}'; --notes-font: '${notes.name}';`;
 ---
 
 <!doctype html>
-<html lang={site.lang}>
+<html lang={site.lang} style={fontVars}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,10 +33,7 @@ const current = tab ?? site.tabs.find((t) => path.startsWith(t.href))?.key;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap"
-    />
+    <link rel="stylesheet" href={fontsHref} />
   </head>
   <body>
     <div class:list={['page', { wide }]}>

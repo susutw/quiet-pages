@@ -6,7 +6,10 @@
   --accent: #2b2a28;
   --measure: 34rem;
   --wide: 52rem;
-  --serif: 'Noto Serif TC', 'Songti TC', 'Source Han Serif TC', 'PMingLiU', serif;
+  /* 字體名稱在 site.config.ts 設定，這裡是後備字體 */
+  --fallback: 'Songti TC', 'Source Han Serif TC', 'PMingLiU', serif;
+  --serif: var(--body-font), var(--fallback);
+  --notes: var(--notes-font), var(--body-font), var(--fallback);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -184,4 +187,11 @@ img {
 
 .prose > :last-child {
   margin-bottom: 0;
+}
+
+/* 短文字體 */
+.note-text {
+  font-family: var(--notes);
+  font-size: 1.05rem;
+  line-height: 1.85;
 }

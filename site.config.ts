@@ -14,4 +14,11 @@ export const site = {
     { key: 'notes', label: '短文', href: '/notes/' },
   ],
   footer: '',
+  // 字體：從 Google Fonts 載入，name 填 Google Fonts 上的字體名稱
+  fonts: {
+    // 全站內文
+    body: { name: 'Noto Serif TC', weights: '400;600' },
+    // 短文（芫荽）。想換成霞鶩文楷就改成 { name: 'LXGW WenKai TC', weights: '400' }
+    notes: { name: 'Iansui', weights: '400' },
+  },
 };
